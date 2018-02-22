@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.sz.mLauncher.MainActivity"
+    android:orientation="vertical"
+    android:background="@drawable/list_item_bg"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="105dp"
+        android:background="@drawable/list_item_bg"
+        >
+
+        <ImageView
+            android:id="@+id/appinfo_icon_iamgeView"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:scaleType="centerCrop"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            />
+        <com.common.base.CustomFontTextView
+            android:id="@+id/appName_textView"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:maxLines="2"
+            android:ellipsize="none"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            />
+    </RelativeLayout>
+
+</LinearLayout>

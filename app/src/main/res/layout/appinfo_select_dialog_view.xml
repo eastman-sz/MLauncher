@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.sz.mLauncher.MainActivity"
+    android:orientation="vertical"
+    android:background="@color/sfs_c1"
+    >
+
+    <com.common.base.CommonTitleView
+        android:id="@+id/appinfo_commonTitleView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <GridView
+        android:id="@+id/appInfo_gridview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:fadingEdge="none"
+        android:overScrollMode="never"
+        android:numColumns="3"
+        android:listSelector="@drawable/list_item_bg"
+        />
+</LinearLayout>
