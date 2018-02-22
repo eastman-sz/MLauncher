@@ -19,8 +19,8 @@ class MainActivity : BaseAppCompactActivitiy() {
     override fun initViews() {
         var list = listOf<View>().toMutableList()
 
-        list.add(SubLauncherView(context))
-        list.add(SubLauncherView(context))
+        list.add(SubLauncherView(context , 0))
+        list.add(SubLauncherView(context , 1))
 
         var pagerAdapter = BasePagerAdapter(context , list)
         viewPager.adapter = pagerAdapter

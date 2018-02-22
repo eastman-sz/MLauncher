@@ -20,6 +20,7 @@
         android:scrollbars="none"
         android:fadingEdge="none"
         android:overScrollMode="never"
+        android:numColumns="3"
         />
 
 </LinearLayout>
