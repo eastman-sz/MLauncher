@@ -6,6 +6,7 @@ import com.common.base.CommonTitleView
 import com.common.dialog.BaseDialog
 import com.sz.mLauncher.R
 import com.sz.util.BroadcastUtil
+import com.utils.lib.ss.common.PkgHelper
 import com.utils.lib.ss.info.LocalAppInfo
 import kotlinx.android.synthetic.main.appinfo_select_dialog_view.*
 /**
@@ -29,7 +30,6 @@ class AppInfoSelectDialog : BaseDialog{
     override fun initTitle() {
         appinfo_commonTitleView.setCenterTitleText("请选择应用")
         appinfo_commonTitleView.setLeftBtnText("取消")
-        appinfo_commonTitleView.setRightBtnText("确定")
         appinfo_commonTitleView.setOnTitleClickListener(object : CommonTitleView.OnTitleClickListener(){
             override fun onLeftBtnClick() {
                 dismiss()
@@ -45,10 +45,18 @@ class AppInfoSelectDialog : BaseDialog{
 
         appInfo_gridview.adapter = adapter
 
-        val appInfoList = LocalAppInfo.getLocalInstalPackage(context);
+        //已选择的应用
+        val pageAppsList = PageAppsDbHelper.getPageApps(pageIndex)
+        var map = HashMap<String , String>()
+        for (i in pageAppsList){
+            map.put(i.pkgName , i.pkgName)
+        }
+
+        //本机所有应用
+        val appInfoList = PkgHelper.getAllInstalPackage(context)
 
         for (i in appInfoList){
-            val appInfo = AppInfo(false , i)
+            val appInfo = AppInfo(map.containsKey(i.pkgName) , i)
 
             list.add(appInfo)
         }
@@ -66,12 +74,12 @@ class AppInfoSelectDialog : BaseDialog{
             adapter.notifyDataSetChanged(appInfo_gridview , position)
 
             when(appInfo.selected){
-                false -> PageAppsDbHelper.delete(0 , appInfo.localAppInfo.pkgName)
-                true -> PageAppsDbHelper.addApps(0 , appInfo.localAppInfo.pkgName)
+                false -> PageAppsDbHelper.delete(pageIndex , appInfo.localAppInfo.pkgName)
+                true -> PageAppsDbHelper.addApps(pageIndex , appInfo.localAppInfo.pkgName)
             }
 
             //send broadcast
-            BroadcastUtil.sendPkgSelectedChgBroadcast(pageIndex , pkgName)
+            BroadcastUtil.sendPkgSelectedChgBroadcast(pageIndex , pkgName , appInfo.selected)
         }
     }
 

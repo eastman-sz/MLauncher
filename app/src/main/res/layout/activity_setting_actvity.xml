@@ -1,9 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.sz.setting.SettingActvity">
+    tools:context="com.sz.setting.SettingActvity"
+    android:orientation="vertical"
+    android:background="@color/sfs_page_bg_color"
+    >
+    <com.common.base.CommonTitleView
+        android:id="@+id/setting_commonTitleView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/c10"
+        >
+        <com.common.base.CustomFontTextView
+            android:id="@+id/bottomAppSelectedBtn"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:textSize="@dimen/s6"
+            android:textColor="@color/c12"
+            android:text="底部应用选择"
+            android:clickable="true"
+            android:onClick="onBtnClick"
+            android:background="@drawable/list_item_bg"
+            />
+
+        <ImageView style="@style/full_line_style" />
+
+        <com.common.base.CustomFontTextView
+            android:id="@+id/page1AppSelectedBtn"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:textSize="@dimen/s6"
+            android:textColor="@color/c12"
+            android:text="第一页应用选择"
+            android:clickable="true"
+            android:onClick="onBtnClick"
+            android:background="@drawable/list_item_bg"
+            />
+
+        <ImageView style="@style/full_line_style" />
+
+        <com.common.base.CustomFontTextView
+            android:id="@+id/page2AppSelectedBtn"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:textSize="@dimen/s6"
+            android:textColor="@color/c12"
+            android:text="第二页应用选择"
+            android:clickable="true"
+            android:onClick="onBtnClick"
+            android:background="@drawable/list_item_bg"
+            />
+
+        <ImageView style="@style/full_line_style" />
+
+    </LinearLayout>
+
+</LinearLayout>

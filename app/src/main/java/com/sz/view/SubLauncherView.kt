@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.widget.AdapterView
 import com.common.base.BaseRelativeLayout
 import com.sz.mLauncher.R
+import com.sz.setting.SettingActvity
 import com.sz.util.BroadCastAction
 import com.utils.lib.ss.common.PkgHelper
 import com.utils.lib.ss.info.LocalAppInfo
@@ -39,7 +40,9 @@ class SubLauncherView : BaseRelativeLayout {
             var pkgName = appInfo.localAppInfo.pkgName
 
             if (pkgName.equals("com.sz.self.setting")){
-                AppInfoSelectDialog(context , pageIndex).show()
+//                AppInfoSelectDialog(context , pageIndex).show()
+
+                context.startActivity(Intent(context , SettingActvity::class.java))
             }else{
 
                 PkgHelper.openAPKByPkgName(context , pkgName)
@@ -78,6 +81,30 @@ class SubLauncherView : BaseRelativeLayout {
         }
     }
 
+    fun addAppInfo(pkgName : String){
+        var localAppInfo = PkgHelper.getLocalAppInfo(context , pkgName)
+
+        var appInfo = AppInfo(false , localAppInfo)
+
+        list.add(0,appInfo)
+
+        adapter?.notifyDataSetChanged()
+    }
+
+    fun delAppInfo(pkgName : String){
+        for (i in list){
+            val mPkgName = i.localAppInfo.pkgName
+
+            if (mPkgName.equals(pkgName)){
+                list.remove(i)
+
+                break
+            }
+        }
+
+        adapter?.notifyDataSetChanged()
+    }
+
     override fun addBroadCastAction(): java.util.ArrayList<String> {
         val broadList = ArrayList<String>();
         broadList.add(BroadCastAction.PKG_SELECTED_CHG)
@@ -93,10 +120,13 @@ class SubLauncherView : BaseRelativeLayout {
             return
         }
 
+        val pkgName = intent?.getStringExtra("pkgName");
+        val added = intent?.getBooleanExtra("added" , false)
 
-
-
-
+        when(added){
+            true -> addAppInfo(pkgName)
+            false -> delAppInfo(pkgName)
+        }
 
     }
 

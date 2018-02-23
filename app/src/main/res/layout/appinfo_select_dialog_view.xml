@@ -20,7 +20,7 @@
         android:scrollbars="none"
         android:fadingEdge="none"
         android:overScrollMode="never"
-        android:numColumns="3"
+        android:numColumns="4"
         android:listSelector="@drawable/list_item_bg"
         />
 </LinearLayout>
