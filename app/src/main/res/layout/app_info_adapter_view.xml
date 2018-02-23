@@ -32,6 +32,17 @@
             android:paddingLeft="2dp"
             android:paddingRight="2dp"
             />
+
+        <ImageView
+            android:id="@+id/select_imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="center"
+            android:src="@drawable/gou_selected"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:visibility="gone"
+            />
     </RelativeLayout>
 
 </LinearLayout>

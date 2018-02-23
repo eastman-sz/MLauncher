@@ -15,6 +15,7 @@ class AppInfoAdapter : IBaseAdapter<AppInfo>{
     constructor(context: Context , list: ArrayList<AppInfo>) : super(context , list , R.layout.app_info_adapter_view)
 
     override fun getConvertView(convertView: View?, lis: MutableList<AppInfo>?, position: Int) {
+        val selectImageView : ImageView = ViewHolder.getView(convertView , R.id.select_imageView)
         val iconImageView : ImageView = ViewHolder.getView(convertView , R.id.appinfo_icon_iamgeView)
         val appNameTextView : CustomFontTextView = ViewHolder.getView(convertView , R.id.appName_textView)
 
@@ -26,6 +27,8 @@ class AppInfoAdapter : IBaseAdapter<AppInfo>{
 
         appNameTextView.text = name
         iconImageView.setImageDrawable(icon)
+
+        selectImageView.visibility = if (selected){View.VISIBLE}else{View.GONE}
     }
 
 }

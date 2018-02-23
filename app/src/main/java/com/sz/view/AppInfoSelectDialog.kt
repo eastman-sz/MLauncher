@@ -5,6 +5,7 @@ import android.os.Bundle
 import com.common.base.CommonTitleView
 import com.common.dialog.BaseDialog
 import com.sz.mLauncher.R
+import com.sz.util.BroadcastUtil
 import com.utils.lib.ss.info.LocalAppInfo
 import kotlinx.android.synthetic.main.appinfo_select_dialog_view.*
 /**
@@ -12,7 +13,11 @@ import kotlinx.android.synthetic.main.appinfo_select_dialog_view.*
  */
 class AppInfoSelectDialog : BaseDialog{
 
-    constructor(context: Context): super(context , R.style.lable_del_dialog)
+    var pageIndex : Int = 0;
+
+    constructor(context: Context , pageIndex : Int): super(context , R.style.lable_del_dialog){
+        this.pageIndex = pageIndex
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +35,6 @@ class AppInfoSelectDialog : BaseDialog{
                 dismiss()
             }
             override fun onRightBtnClick() {
-
             }
         })
     }
@@ -50,8 +54,26 @@ class AppInfoSelectDialog : BaseDialog{
         }
 
         adapter.notifyDataSetChanged()
-    }
 
+        appInfo_gridview.setOnItemClickListener { parent, view, position, id ->
+
+            val appInfo = list.get(position)
+            val pkgName = appInfo.localAppInfo.pkgName
+            var selected = appInfo.selected
+
+            appInfo.selected = !selected
+
+            adapter.notifyDataSetChanged(appInfo_gridview , position)
+
+            when(appInfo.selected){
+                false -> PageAppsDbHelper.delete(0 , appInfo.localAppInfo.pkgName)
+                true -> PageAppsDbHelper.addApps(0 , appInfo.localAppInfo.pkgName)
+            }
+
+            //send broadcast
+            BroadcastUtil.sendPkgSelectedChgBroadcast(pageIndex , pkgName)
+        }
+    }
 
     override fun show() {
         super.show()
