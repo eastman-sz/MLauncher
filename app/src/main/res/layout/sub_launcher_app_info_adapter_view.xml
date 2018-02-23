@@ -26,13 +26,14 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_alignParentBottom="true"
-            android:gravity="center"
+            android:gravity="center_horizontal"
             android:maxLines="2"
             android:ellipsize="none"
             android:paddingLeft="2dp"
             android:paddingRight="2dp"
-            android:textColor="@color/c12"
+            android:textColor="@color/c10"
             android:textSize="@dimen/s4"
+            android:paddingTop="5dp"
             />
 
         <ImageView

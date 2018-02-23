@@ -2,13 +2,16 @@ package com.sz.view
 
 import android.content.Context
 import android.os.Bundle
+import android.view.ViewGroup
 import com.common.base.CommonTitleView
 import com.common.dialog.BaseDialog
+import com.sz.empty.LoadappsEmptyView
 import com.sz.mLauncher.R
 import com.sz.util.BroadcastUtil
 import com.utils.lib.ss.common.PkgHelper
-import com.utils.lib.ss.info.LocalAppInfo
 import kotlinx.android.synthetic.main.appinfo_select_dialog_view.*
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 /**
  * Created by E on 2018/2/22.
  */
@@ -34,8 +37,6 @@ class AppInfoSelectDialog : BaseDialog{
             override fun onLeftBtnClick() {
                 dismiss()
             }
-            override fun onRightBtnClick() {
-            }
         })
     }
 
@@ -45,23 +46,9 @@ class AppInfoSelectDialog : BaseDialog{
 
         appInfo_gridview.adapter = adapter
 
-        //已选择的应用
-        val pageAppsList = PageAppsDbHelper.getPageApps(pageIndex)
-        var map = HashMap<String , String>()
-        for (i in pageAppsList){
-            map.put(i.pkgName , i.pkgName)
-        }
+        addEmptyView()
 
-        //本机所有应用
-        val appInfoList = PkgHelper.getAllInstalPackage(context)
-
-        for (i in appInfoList){
-            val appInfo = AppInfo(map.containsKey(i.pkgName) , i)
-
-            list.add(appInfo)
-        }
-
-        adapter.notifyDataSetChanged()
+        loadAppInstalledApps(list , adapter)
 
         appInfo_gridview.setOnItemClickListener { parent, view, position, id ->
 
@@ -81,6 +68,45 @@ class AppInfoSelectDialog : BaseDialog{
             //send broadcast
             BroadcastUtil.sendPkgSelectedChgBroadcast(pageIndex , pkgName , appInfo.selected)
         }
+    }
+
+    fun loadAppInstalledApps(list: ArrayList<AppInfo> , adapter : AppInfoAdapter){
+        doAsync{
+            //已选择的应用
+            val pageAppsList = PageAppsDbHelper.getPageApps(pageIndex)
+            var map = HashMap<String , String>()
+            for (i in pageAppsList){
+                map.put(i.pkgName , i.pkgName)
+            }
+
+            //本机所有应用
+            val appInfoList = PkgHelper.getAllInstalPackage(context)
+
+            for (i in appInfoList){
+                val appInfo = AppInfo(map.containsKey(i.pkgName) , i)
+
+                when(appInfo.selected){
+                    true -> list.add(0 ,appInfo)
+                    false -> list.add(appInfo)
+                }
+            }
+
+            uiThread {
+                adapter.notifyDataSetChanged()
+            }
+        }
+    }
+
+    fun addEmptyView(){
+        val emptyView = appInfo_gridview.emptyView
+        if (null != emptyView){
+            return
+        }
+        val parentView : ViewGroup? = appInfo_gridview.parent as? ViewGroup
+
+        val newEmptyView = LoadappsEmptyView(context)
+        parentView?.addView(newEmptyView)
+        appInfo_gridview.emptyView = newEmptyView
     }
 
     override fun show() {

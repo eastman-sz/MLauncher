@@ -8,6 +8,7 @@
     >
 
     <ImageView
+        android:id="@+id/main_bg_imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="center"
@@ -28,6 +29,35 @@
             android:fadingEdge="none"
             android:overScrollMode="never"
             />
+        
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/transparent"
+            >
+            <LinearLayout
+                android:layout_width="50dp"
+                android:layout_height="20dp"
+                android:orientation="horizontal"
+                android:layout_centerInParent="true"
+                >
+                <com.common.base.CustomFontTextView
+                    android:id="@+id/dot0ImageView"
+                    android:layout_width="6dp"
+                    android:layout_height="6dp"
+                    android:background="@drawable/c27_circle_selector"
+                    />
+                <com.common.base.CustomFontTextView
+                    android:id="@+id/dot1ImageView"
+                    android:layout_width="6dp"
+                    android:layout_height="6dp"
+                    android:background="@drawable/c27_circle_selector"
+                    android:layout_marginLeft="5dp"
+                    android:alpha="0.5"
+                    />
+            </LinearLayout>
+
+        </RelativeLayout>
 
         <GridView
             android:id="@+id/main_tab_gridview"

@@ -66,6 +66,22 @@
 
         <ImageView style="@style/full_line_style" />
 
+        <com.common.base.CustomFontTextView
+            android:id="@+id/mainBgImgSelectedBtn"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:textSize="@dimen/s6"
+            android:textColor="@color/c12"
+            android:text="设置屏幕背景图"
+            android:clickable="true"
+            android:onClick="onBtnClick"
+            android:background="@drawable/list_item_bg"
+            />
+
+        <ImageView style="@style/full_line_style" />
+
     </LinearLayout>
 
 </LinearLayout>

@@ -1,5 +1,6 @@
 package com.sz.view
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import com.common.base.BaseRelativeLayout
 import com.sz.mLauncher.R
 import com.sz.setting.SettingActvity
 import com.sz.util.BroadCastAction
+import com.sz.util.PermissionHelpler
 import com.utils.lib.ss.common.PkgHelper
 import com.utils.lib.ss.info.LocalAppInfo
 import kotlinx.android.synthetic.main.sub_launcher_view.view.*
@@ -18,7 +20,7 @@ class SubLauncherView : BaseRelativeLayout {
 
     var pageIndex : Int = 0
     var list = ArrayList<AppInfo>()
-    var adapter : AppInfoAdapter? = null
+    var adapter : SubLauncherAppInfoAdapter? = null
 
     constructor(context: Context? , pageIndex : Int) : super(context){
         this.pageIndex = pageIndex;
@@ -28,7 +30,7 @@ class SubLauncherView : BaseRelativeLayout {
     override fun initViews() {
         LayoutInflater.from(context).inflate(R.layout.sub_launcher_view , this);
 
-        adapter = AppInfoAdapter(context , list)
+        adapter = SubLauncherAppInfoAdapter(context , list)
         gridview.adapter = adapter
 
         addPageApps()
@@ -40,12 +42,22 @@ class SubLauncherView : BaseRelativeLayout {
             var pkgName = appInfo.localAppInfo.pkgName
 
             if (pkgName.equals("com.sz.self.setting")){
-//                AppInfoSelectDialog(context , pageIndex).show()
 
                 context.startActivity(Intent(context , SettingActvity::class.java))
             }else{
 
-                PkgHelper.openAPKByPkgName(context , pkgName)
+                val openSuccess = PkgHelper.openAPKByPkgName(context , pkgName)
+                when(openSuccess){
+                    false -> {
+                        val hasCallPhonePermission = PermissionHelpler.checkHasPermission(context , Manifest.permission.CALL_PHONE)
+                        if (hasCallPhonePermission){
+                            val name = appInfo.localAppInfo.labelName
+                            if (name.contains("电话") || pkgName.contains("phone")){
+                                context.startActivity(Intent(Intent.ACTION_DIAL).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -76,9 +88,9 @@ class SubLauncherView : BaseRelativeLayout {
             var appInfo = AppInfo(false , localAppInfo)
 
             list.add(appInfo)
-
-            adapter?.notifyDataSetChanged()
         }
+
+        adapter?.notifyDataSetChanged()
     }
 
     fun addAppInfo(pkgName : String){
@@ -101,6 +113,8 @@ class SubLauncherView : BaseRelativeLayout {
                 break
             }
         }
+
+
 
         adapter?.notifyDataSetChanged()
     }
@@ -127,7 +141,6 @@ class SubLauncherView : BaseRelativeLayout {
             true -> addAppInfo(pkgName)
             false -> delAppInfo(pkgName)
         }
-
     }
 
 
