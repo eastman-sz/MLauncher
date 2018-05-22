@@ -17,9 +17,9 @@
             android:id="@+id/appinfo_icon_iamgeView"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:scaleType="fitXY"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
+            android:scaleType="fitXY"
             />
         <com.common.base.CustomFontTextView
             android:id="@+id/appName_textView"

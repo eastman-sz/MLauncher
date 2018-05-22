@@ -15,7 +15,6 @@ import com.sz.util.PermissionHelpler
 import com.sz.view.*
 import com.utils.lib.ss.common.PkgHelper
 import kotlinx.android.synthetic.main.activity_main.*
-import org.jetbrains.anko.runOnUiThread
 
 class MainActivity : BaseAppCompactActivitiy() {
 

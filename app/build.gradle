@@ -28,9 +28,10 @@ android {
     repositories {
         flatDir { dirs 'libs' }
     }
-    buildToolsVersion '26.0.2'
+    buildToolsVersion '27.0.3'
 }
 
+ext.kotlin_version = '1.2.41'
 ext.anko_version='0.10.4'
 
 dependencies {

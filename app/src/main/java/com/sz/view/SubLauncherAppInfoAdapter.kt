@@ -7,6 +7,8 @@ import com.common.base.CustomFontTextView
 import com.common.base.IBaseAdapter
 import com.common.base.ViewHolder
 import com.sz.mLauncher.R
+import org.jetbrains.anko.image
+
 /**
  * Created by E on 2018/2/22.
  */
@@ -24,9 +26,15 @@ class SubLauncherAppInfoAdapter : IBaseAdapter<AppInfo>{
         var localAppInfo = appInfo.localAppInfo
         var name = localAppInfo.labelName
         val icon = localAppInfo.icon
+        val pkgName = localAppInfo.pkgName
 
         appNameTextView.text = name
-        iconImageView.setImageDrawable(icon)
+
+        if (pkgName.equals("com.sz.self.setting")){
+            iconImageView.setImageResource(R.drawable.sys_setting_icon)
+        }else{
+            iconImageView.image = icon
+        }
 
         selectImageView.visibility = if (selected){View.VISIBLE}else{View.GONE}
     }

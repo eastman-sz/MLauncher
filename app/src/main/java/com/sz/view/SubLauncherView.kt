@@ -66,7 +66,7 @@ class SubLauncherView : BaseRelativeLayout {
         if (0 != pageIndex){
             return
         }
-        var appInfo = AppInfo(false , LocalAppInfo("com.sz.self.setting" , "设置" , "" ,null))
+        var appInfo = AppInfo(false , LocalAppInfo("com.sz.self.setting" , "桌面设置" , "" ,null))
 
         list.add(appInfo)
 
